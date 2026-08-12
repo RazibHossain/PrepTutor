@@ -1,4 +1,4 @@
-🔥 PrepTutor — Interview Prep
+🔥 PrepForge — Interview Prep
 PrepForge is a lightweight, local-first interview preparation tool designed to help developers and students organize, manage, and practice technical questions. Built entirely with vanilla JavaScript, HTML, and Tailwind CSS, it runs smoothly in the browser without needing a backend. Your data stays private and is saved directly to your browser's local storage.
 
 ✨ Features
