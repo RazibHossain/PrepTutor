@@ -1,47 +1,211 @@
-🔥 PrepForge — Interview Prep
-PrepForge is a lightweight, local-first interview preparation tool designed to help developers and students organize, manage, and practice technical questions. Built entirely with vanilla JavaScript, HTML, and Tailwind CSS, it runs smoothly in the browser without needing a backend. Your data stays private and is saved directly to your browser's local storage.
+# PrepForge 🔥
 
-✨ Features
-📝 Question Management: Easily add, edit, and delete interview questions. Categorize them by Topic, Subtopic, Difficulty (Easy/Medium/Hard), and Revision Type (Quick/Regular).
-⚡ Custom Practice Sessions: Generate targeted quizzes filtered by specific topics, difficulty levels, and revision types. Practice with interactive flip-cards and track your time.
-📊 Interactive Dashboard: Visualize your preparation progress with donut charts for difficulty and revision type distribution, mastery rates, and recent activity.
-📁 Topics Breakdown: A dedicated grid view showing all your topics, complete with difficulty distribution bars and practice completion rates.
-🔍 Advanced Filtering: Search through your question bank by text, or filter by topic, subtopic, difficulty, revision type, and favorites.
-💾 Local-First & Private: No login required. All your questions are stored securely in your browser's localStorage.
-📤 Import/Export: Backup your question bank or move it to another device easily using JSON file export/import.
-📱 Responsive Design: A sleek, dark-mode interface that works flawlessly on both desktop and mobile devices.
-🛠️ Tech Stack
-HTML5: Semantic markup and structure.
-CSS3 / Tailwind CSS: Utility-first styling via CDN for rapid UI development.
-Vanilla JavaScript (ES6+): Core logic, DOM manipulation, and state management.
-Font Awesome: Icons.
-Google Fonts: Space Grotesk & DM Sans.
-Web APIs: localStorage for data persistence, FileReader for JSON imports.
-🚀 Getting Started
-Because PrepForge is built with static files, getting started takes seconds.
+> A lightweight, local-first interview preparation tool built with Vanilla JavaScript, HTML, and Tailwind CSS.
 
-Clone the repository:
+PrepForge helps developers and students organize, manage, and practice technical interview questions without requiring a backend or user account. Everything runs directly in your browser, and all data is stored locally using the browser's `localStorage`.
+
+---
+
+## ✨ Features
+
+### 📝 Question Management
+- Add, edit, and delete interview questions
+- Organize questions by:
+  - Topic
+  - Subtopic
+  - Difficulty (Easy, Medium, Hard)
+  - Revision Type (Quick, Regular)
+- Mark important questions as favorites
+
+### ⚡ Custom Practice Sessions
+- Generate practice sessions using custom filters
+- Practice with interactive flip cards
+- Track practice time
+- Focus on specific topics or difficulty levels
+
+### 📊 Interactive Dashboard
+- Visualize your preparation progress
+- Donut charts for:
+  - Difficulty distribution
+  - Revision type distribution
+- Track mastery rates
+- View recent activity
+
+### 📁 Topics Overview
+- Browse all topics in a clean grid layout
+- View difficulty distribution for each topic
+- Monitor practice completion progress
+
+### 🔍 Powerful Search & Filtering
+Filter questions by:
+- Keyword search
+- Topic
+- Subtopic
+- Difficulty
+- Revision type
+- Favorites
+
+### 💾 Local-First & Private
+- No account or login required
+- No server or database
+- Data remains in your browser
+- Works completely offline after loading
+
+### 📤 Import & Export
+- Export your entire question bank as a JSON file
+- Import previously exported backups
+- Merge or overwrite existing data
+
+### 📱 Responsive Design
+- Modern dark-themed interface
+- Optimized for desktop, tablet, and mobile devices
+
+---
+
+## 🛠️ Tech Stack
+
+- HTML5
+- Tailwind CSS (CDN)
+- Vanilla JavaScript (ES6+)
+- Font Awesome
+- Google Fonts (Space Grotesk & DM Sans)
+- Browser Web APIs
+  - `localStorage`
+  - `FileReader`
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
 git clone https://github.com/your-username/PrepForge.git
-Navigate to the folder:
-bash
+```
 
+### 2. Navigate to the project
+
+```bash
 cd PrepForge
-Open the app:
-Simply open the index.html file in your preferred web browser.
-(Alternatively, use a live server extension like Live Server in VS Code for the best experience).
-⌨️ Keyboard Shortcuts
-Ctrl/Cmd + N: Quickly open the "Add Question" modal.
-Space: Flip the practice card during an active practice session.
-Esc: Close any active modals or overlays.
-📂 Data Management
-Automatic Saving: Every change you make (adding, editing, practicing) is instantly saved to your browser's local storage.
-Exporting: Click the download icon in the sidebar to download your entire question bank as a JSON file.
-Importing: Click the upload icon to select a previously exported JSON file. You can choose to overwrite or merge data.
-🤝 Contributing
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
+```
 
-Fork the repository
-Create your feature branch (git checkout -b feature/AmazingFeature)
-Commit your changes (git commit -m 'Add some AmazingFeature')
-Push to the branch (git push origin feature/AmazingFeature)
-Open a Pull Request
+### 3. Run the application
+
+Simply open `index.html` in your preferred web browser.
+
+For a better development experience, use the **Live Server** extension in VS Code.
+
+---
+
+## ⌨️ Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl/Cmd + N` | Open the **Add Question** dialog |
+| `Space` | Flip the practice card |
+| `Esc` | Close active modal or overlay |
+
+---
+
+## 📂 Data Management
+
+### Automatic Saving
+Every change is automatically saved to your browser's local storage.
+
+### Export
+Download your complete question bank as a JSON backup.
+
+### Import
+Import a previously exported JSON file and choose to:
+
+- Merge with existing data
+- Replace existing data
+
+---
+
+## 📸 Screenshots
+
+> Add screenshots here.
+
+```
+screenshots/
+├── dashboard.png
+├── questions.png
+├── practice.png
+└── topics.png
+```
+
+Example:
+
+```md
+![Dashboard](screenshots/dashboard.png)
+![Practice Mode](screenshots/practice.png)
+```
+
+---
+
+## 📁 Project Structure
+
+```
+PrepForge/
+│
+├── index.html
+├── css/
+├── js/
+├── assets/
+├── screenshots/
+└── README.md
+```
+
+---
+
+## 🌟 Why PrepForge?
+
+- ✅ No backend required
+- ✅ Completely private
+- ✅ Fast and lightweight
+- ✅ Works offline
+- ✅ Easy backup & restore
+- ✅ Mobile-friendly
+- ✅ Perfect for interview preparation
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+2. Create a feature branch
+
+```bash
+git checkout -b feature/AmazingFeature
+```
+
+3. Commit your changes
+
+```bash
+git commit -m "Add AmazingFeature"
+```
+
+4. Push to GitHub
+
+```bash
+git push origin feature/AmazingFeature
+```
+
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+Feel free to use, modify, and distribute it.
+
+---
+
+## ⭐ Support
+
+If you find this project useful, consider giving it a **⭐ Star** on GitHub. It helps others discover the project and motivates future improvements.
