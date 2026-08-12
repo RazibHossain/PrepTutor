@@ -1,0 +1,357 @@
+[
+  {
+    "id": "mspss9tkxei52b",
+    "question": "How JVM manages memory?",
+    "answer": "JVM divides memory into Heap, Stack, and Metaspace. Objects are stored in Heap and managed by Garbage Collector. Young generation handles short-lived objects with Minor GC, \nwhile Old generation stores long-lived objects. GC algorithms like G1 optimize pause time by collecting regions instead of the whole heap.",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786521518264,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "mspta2mabwv0h4",
+    "question": "Why should a backend developer study GC?",
+    "answer": "Because in production, many “application problems” are actually memory-management problems.Your API may work perfectly in development but fail under real traffic because of:\nMemory leaks\nLong GC pauses\nHeap exhaustion\nHigh object creation rate\nBad caching\nInefficient JSON handling",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786522348738,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptef3eef6ljx",
+    "question": "How GC helps you diagnose these issues?",
+    "answer": "Example 1 — API Suddenly Slow\n\nSuppose you have a Spring Boot API:\n\n@GetMapping(\"/users\")\npublic List<UserDto> getUsers() {\n    return userRepository.findAll();\n}\n\nNow imagine:\n\n50,000 users returned.Huge JSON serialization. Many temporary objects created. Under heavy traffic heap fills rapidly,GC runs very frequently,CPU usage becomes high,Response time jumps from 200ms → 10 seconds\nUsers complain: “Server is slow.” But the actual issue is Excessive garbage collection. What happens internally - Every request creates many temporary objects: DTOs,JSON objects,Strings,Hibernate entities,Maps,Arrays.\nThousands/millions of objects are created and destroyed.GC continuously cleans them.\nIf GC becomes overloaded:\nCPU spikes\nApplication pauses\nAPIs slow down\n\nExample 2 — OutOfMemoryError\n\nSuppose you accidentally do:\n\nprivate static List<User> cache = new ArrayList<>();\n\nand continuously add users:\n\ncache.add(user);\n\nObjects never become unreachable.GC cannot clean them.Eventually:java.lang.OutOfMemoryError: Java heap space. Production server crashes.\nUnderstanding GC helps you detect:\nWhich objects survive\nWhy memory is not freed\nHeap dump analysis",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "hard",
+    "revisionType": "quick",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786522551530,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "mspthm9uqol9d7",
+    "question": "Why companies tune GC?",
+    "answer": "Large systems tune:\nHeap size\nYoung generation size   \nGC algorithm\nPause targets\n\nExample JVM options:\n-XX:+UseG1GC   //Enables the G1 (Garbage First) Garbage Collector\n-XX:MaxGCPauseMillis=200\n-Xms4g       //Sets the initial/minimum heap size to 4 gigabytes.\n-Xmx4g       //Sets the maximum heap size to 4 gigabytes.\n\nGoal:\nStable latency\nBetter throughput\nLower memory pressure\n\nTotal Heap: 4GB\n├── Young Generation (dynamic, G1-controlled)\n│   ├── Eden (most new objects)\n│   └── Survivor Spaces (S0, S1)\n└── Old Generation (the rest)\n\nparallel gc te Young/Old Generation size bola jai. G1 Dynamically allocate kore.",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786522700802,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptiycb2mc6kg",
+    "question": "Objects Life cycle in Heap?",
+    "answer": "Heap memory divided into 2 sections. Young Generation and Old Generation.\nYoung Generation: Eitate 2 typer ojcet thake - Eden and Survivor.\n\tEden:\n\t\tNotun object create hole ta initially Eden section a thake. Short lived object gule ei section a thake and object null reference/gc collection\n\t\ter criteriate porle gc dara remove hoiye jai. Short dead lived object gulu jomte jomte jokhon full hoiye jai tokhon minor gc run hoi and eden er memory clean kore.\n\tSurvivor: \n\t\tEkbar minor gc cholar por jei shokol object eden state live thake(becomes eden to young objects) tara survivor state a chole ashe and live life/age +1 kore barte thake.\n\t\t\nOld Generation:\n\tSurvivor state er jei shokol young object er age ekta nirdhirsto threshold par kore normally 15 tara young generation er survivor state theke olg generation a shift kore.\n\tJokhon Old generation full hoiye jai tokhon major/full gc run kore. Er poreu jodi heap memory full thake tahole OutOfMemoryError error through korbe.",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786522763099,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptl1x6xct0fi",
+    "question": "When does gc run? Any time schedule or random?",
+    "answer": "GC in Java is not random and not on a fixed schedule. It is event-driven + JVM-managed, meaning the Java Virtual Machine decides when to run it based on memory conditions. We can \nmanually request gc to run but JVM may: ignore it, delay it, partially honor it.",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786522861050,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptlmnwn0ex2v",
+    "question": "When an object becomes eligible for garbage collector?",
+    "answer": "Nullifying the reference variable (obj = null).\nRe-assigning the reference variable (obj = new Object()).\nAn object created inside the method (eligible after method execution).",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786522887932,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptmgr7jb1z64",
+    "question": "How many types of GC Implementations",
+    "answer": "JVM has four types of GC implementations:\nSerial Garbage Collector\nParallel Garbage Collector\nG1 Garbage Collector\nZ Garbage Collector\n\nSerial Garbage Collector\nThis is the simplest GC implementation, as it basically works with a single thread. As a result, this GC implementation freezes all application threads when it runs.\nTherefore, it’s not a good idea to use it in multi-threaded applications, like server environments.\n1. Small applications\nBest for applications with:\nSmall heap size\nLow memory usage\nSimple workloads\nExample:\nSmall desktop apps\nCommand-line tools\nUtility programs\n\nParallel Garbage Collector \nIt’s the default GC of the JVM from Java 5 until Java 8 and is sometimes called Throughput Collectors. Unlike Serial Garbage Collector, it uses multiple threads for managing heap space, \nbut it also freezes other application threads while performing GC.If we use this GC, we can specify maximum garbage collection threads and pause time, throughput, and footprint (heap size).\n\n\nG1 Garbage Collector\nG1 (Garbage First) Garbage Collector is designed for applications running on multi-processor machines with large memory space. It’s available from the JDK7 Update 4 and in later releases.\nUnlike other collectors, the G1 collector partitions the heap into a set of equal-sized heap regions, each a contiguous range of virtual memory. When performing garbage collections,\nG1 shows a concurrent global marking phase (i.e. phase 1, known as Marking) to determine the liveness of objects throughout the heap.After the mark phase is complete, G1 knows which\n regions are mostly empty. It collects in these areas first, which usually yields a significant amount of free space (i.e. phase 2, known as Sweeping). That’s why this method of garbage collection is called Garbage-First.\nTo enable the G1 Garbage Collector, we can use the following argument:\njava -XX:+UseG1GC -jar Application.java\n\n\nZGC Garbage Collector\nZGC performs all expensive work concurrently, without stopping the execution of application threads for more than 10 ms, which makes it suitable for applications that require low latency. \nIt uses load barriers with colored pointers to perform concurrent operations when the threads are running, and they’re used to keep track of heap usage.\nReference coloring (colored pointers) is the core concept of ZGC. It means that ZGC uses some bits (metadata bits) of reference to mark the state of the object. It also handles heaps ranging from 8MB to 16TB in size.\n Furthermore, pause times don’t increase with the heap, live-set, or root-set size.\nSimilar to G1, Z Garbage Collector partitions the heap, except that heap regions can have different sizes.\n\n\nTraditional GC (like G1):\nJanitor says: \"Everyone out! I need to clean.\"\nLibrary closes for 200ms\nEveryone waits outside\nLong pause, everyone annoyed\n\nZGC:\n100 janitors work while library stays open\nSome clean shelves, some pick up trash, some reorganize books\nLibrary never closes\nNo waiting for anyone\n\nNormal reference:     [Address: 0x1a2b3c4d]  ← No color\nZGC colored pointer:  [Finalizable | Remapped | Marked | Address: 0x1a2b3c4d]\n                      ↑           ↑         ↑\n                      Color codes that tell ZGC what state the object is in\nHow colors work:\nGreen mark = Object is alive, don't clean\nYellow mark = Object being moved, check the forwarding address\nRed mark = Object is garbage, will be cleaned",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "hard",
+    "revisionType": "quick",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786522926931,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptofg3ym4gbo",
+    "question": "G1 vs ZGC: Core Comparison",
+    "answer": "The choice between G1 and ZGC fundamentally comes down to latency vs throughput trade-offs. Here's how they compare across key dimensions:\n\nDimension\t\t\t\t\t\t\tG1 GC\t\t\t\t\t\t\t\t\t\t\t                      ZGC\nTarget Pause Time\t\t\t50–200ms (configurable, predictable)\t\t<1ms (sub-millisecond, ultra-low)\nThroughput\t\t\t\t\t   High (balanced design)\t\t\t\t\t\tModerate (CPU overhead from concurrency)\nMemory \t\t\t\t\t\tOverhead\t5–10% of heap\t\t\t\t\t15–20% of heap\nRecommended Heap Size\t\t4GB–64GB (optimal range)\t\t\t\t\t≥16GB (scales to 16TB)\nBest For\t\t\t\t\tWeb services, enterprise apps, \t\t\t\tReal-time trading, gaming servers, latency-critical systems\n\t\t\t\t\t\t\tbalanced workloads",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786523018547,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptqn18htvdng",
+    "question": "Stop-The-World (STW)?",
+    "answer": "All application threads pause during GC",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "quick",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786523121692,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "mspttd6rdh5t6f",
+    "question": "Your service has high latency spikes every few minutes. CPU is fine. What’s your approach?",
+    "answer": "First suspicion: GC pauses (Stop-The-World).\nStep-by-step approach:\n\nCheck GC logs:\n-Xlog:gc*\nLook for:\nLong pause times\nFrequent Full GC\nUse tools:\njstat -gc\njvisualvm\nIf confirmed:\nSwitch to G1 GC\nTune:\n\n-XX:MaxGCPauseMillis=200\n🎯 Insight\nLatency spike + normal CPU = usually GC or thread blocking",
+    "topic": "Real World Scenario",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "quick",
+    "tags": [
+      "gc"
+    ],
+    "favorite": true,
+    "createdAt": 1786523248899,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptuc90ts0m3z",
+    "question": "Why does Full GC happen frequently in a well-designed system?",
+    "answer": "Possible reasons:\n\n1. Memory leak\nObjects retained unintentionally\n2. Incorrect heap sizing\nToo small Old Gen\n3. Promotion failure\nYoung objects quickly move to Old Gen\n4. High allocation rate\nToo many short-lived objects\n🎯 Add depth (this is what impresses interviewer)\n\nEven if objects are short-lived, if allocation rate is very high, GC pressure increases, causing frequent cycles.",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786523294340,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptv1twk4ctmi",
+    "question": "Explain how G1 GC works internally?",
+    "answer": "G1 (Garbage First) divides heap into regions instead of fixed Young/Old.\n\nSteps:\nHeap split into ~2048 regions\nTracks live data per region\nPicks regions with most garbage first\nPerforms incremental collection\n🔥 Key Features\nPredictable pause time\nMixed GC (Young + Old)\nAvoids full heap scan\n🎯 One-liner:\n\nG1 prioritizes regions with most garbage to minimize pause time.",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786523327492,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptwbfw62men1",
+    "question": "What causes memory leak in Java despite GC?",
+    "answer": "GC only removes unreachable objects, not unused ones.\n\nCommon causes:\nStatic collections\nCache without eviction\nListeners not removed\nThreadLocal misuse\nExample:\nstatic List<Object> cache = new ArrayList<>();\n🎯 Strong insight:\n\nMemory leak in Java = logical leak, not physical",
+    "topic": "QNA",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "quick",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786523386604,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptwxx9jnsgsm",
+    "question": "Difference between StackOverflowError and OutOfMemoryError?",
+    "answer": "Error\tCause\nStackOverflowError\tDeep recursion, stack full\nOutOfMemoryError\tHeap or Metaspace full\n🎯 Add depth:\n\nStack memory is per-thread, while heap is shared across threads.",
+    "topic": "QNA",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "quick",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786523415741,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptxm0srcpjzn",
+    "question": "How does object allocation work in JVM?",
+    "answer": "Object created in Eden space\nUses TLAB (Thread Local Allocation Buffer) → fast allocation\nIf survives GC → moves to Survivor\nEventually → Old Gen\n🎯 Key insight:\n\nMost objects die young → optimized in Young Gen",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786523446972,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptyf3w77d9hc",
+    "question": "You see “GC overhead limit exceeded”. What does it mean?",
+    "answer": "JVM spends >98% time doing GC but recovers <2% memory.\n\nCauses:\nMemory leak\nVery small heap\nHigh object churn\nFix:\nIncrease heap\nFix memory leak\nOptimize object creation",
+    "topic": "QNA",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "quick",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786523484668,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptyysldjff1c",
+    "question": "How do you detect memory leak in production?",
+    "answer": "Step 1: Take heap dump\njmap -dump:live,format=b,file=heap.hprof <pid>\nStep 2: Analyze\nEclipse MAT\nLook for:\nDominator tree\nRetained size\n🎯 Key insight:\n\nFocus on objects that retain the most memory, not just count.",
+    "topic": "QNA",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "quick",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786523510181,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "msptztedw5g3gm",
+    "question": "Why is “stop-the-world” needed? Can we avoid it?",
+    "answer": "STW ensures memory consistency during GC.\n\nCan we avoid?\n\n❌ No (completely)\n✅ But reduce with:\n\nG1\nZGC\nShenandoah\n🎯 Insight:\n\nTrade-off: consistency vs latency",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786523549845,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "mspu0fo59i27bk",
+    "question": "When would you choose ZGC over G1?",
+    "answer": "Use ZGC when:\n\nUltra-low latency required (<10ms)\nLarge heap (>16GB)\nReal-time systems\n\nUse G1 when:\n\nBalanced throughput + latency\nGeneral microservices",
+    "topic": "Java Core",
+    "subtopic": "Memory Management",
+    "level": "medium",
+    "revisionType": "regular",
+    "tags": [
+      "gc"
+    ],
+    "favorite": false,
+    "createdAt": 1786523578709,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  },
+  {
+    "id": "mspu4kwdgdpqpn",
+    "question": "I have a product on stock. let assumse i run offer with minimum price. thousand of people try to buy it. what happend to my system?",
+    "answer": "1. Traffic spike (sudden load)\nThousands of requests hit your backend at once.\nIf your server capacity is limited → high CPU, memory pressure, slow response\nResult:\nTimeouts\nServer crash\n\n2. Race condition on stock (biggest problem)\n\nLet’s say:\n\nStock = 100 units\n10,000 users try to buy\n\nWithout protection:\n\nMultiple requests read stock = 100 at the same time\nAll try to deduct\nResult:\n👉 You may sell more than 100 (overselling)\n\nDatabase contention\nThousands of writes at the same time\nRow locking / table locking\nDeadlocks may occur\n\n\n\n\nL1 — Atomic DB Update\nUPDATE product\nSET stock = stock - 1\nWHERE id = 1 AND stock > 0;\n\nDB becomes bottleneck under high traffic\nThousands of concurrent updates = slow\nLock contention(Multiple transaction wait for locking)\n\n\n\n🟢 L2 — Transaction + Row Lock (pessimistic )\n✅ Approach\nSELECT stock FROM product WHERE id = 1 FOR UPDATE;\n\nHeavy locking\nThreads wait → slow system\nCan cause deadlocks\n\nL3 — Add Cache (Read Optimization)\n\nUse:\n\nRedis\n✅ Approach\nRead stock from Redis\nDB still does final update\n✅ Pros\nReduces DB reads\nFaster response\n❌ Cons\nWrites still hit DB\nCache inconsistency risk\n\n\nL4 — Redis Atomic Stock (Game changer 🔥)\n✅ Approach\nStore stock in Redis\nUse atomic operation:\nDECR product:1:stock\nFlow\nIf Redis stock > 0 → allow\nElse → reject immediately\n\n✅ Pros\nExtremely fast (in-memory)\nHandles huge traffic\nPrevents overselling at entry level\n❌ Cons\nRedis crash = stock lost (if not persisted)\nDB & Redis sync complexity\nStill no request smoothing\n\nL5 — Add Queue (Traffic Control)\n\nUse:\n\nRabbitMQ\nor Apache Kafka\n✅ Approach\nUser → Queue → Worker → DB\n✅ Pros\nSmooths traffic spikes\nPrevents DB overload\nControlled processing rate\n❌ Cons\nAdds latency\nMore components to manage\nNeed retry & failure handling\n⬆️ Move because:\n\n👉 Need better user experience & fairness",
+    "topic": "Real World Scenario",
+    "subtopic": "Concurrency",
+    "level": "hard",
+    "revisionType": "quick",
+    "tags": [],
+    "favorite": false,
+    "createdAt": 1786523772109,
+    "practiceCount": 0,
+    "lastPracticed": null,
+    "known": false
+  }
+]
